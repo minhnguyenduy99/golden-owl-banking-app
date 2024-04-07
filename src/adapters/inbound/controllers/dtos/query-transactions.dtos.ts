@@ -30,7 +30,10 @@ export class QueryTransactionResponseDTO {
 	@ApiProperty()
 	totalPage: number
 
-	@ApiProperty()
+	@ApiProperty({
+		type: TransactionDTO,
+		isArray: true,
+	})
 	items: TransactionDTO[]
 
 	constructor(props: Partial<QueryTransactionResponseDTO>) {

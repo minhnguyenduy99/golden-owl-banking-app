@@ -2,11 +2,12 @@ import {
 	BadRequestException,
 	Body,
 	Controller,
+	HttpCode,
 	InternalServerErrorException,
 	Logger,
 	Post,
 } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import {
 	CreateTransactionRequestDTO,
 	CreateTransactionResponseDTO,
@@ -22,11 +23,48 @@ import { AccountService } from 'src/application/services'
 	path: 'transactions',
 })
 @ApiTags('transactions')
+@ApiResponse({
+	status: 500,
+	description: 'Internal server error',
+	schema: {
+		example: {
+			result: 'error',
+			message: 'Internal server error',
+		},
+	},
+})
+@ApiResponse({
+	status: 400,
+	description: 'Bad request',
+	schema: {
+		example: {
+			result: 'error code',
+			message: 'error message',
+		},
+	},
+})
+@ApiResponse({
+	status: 404,
+	description: 'not found',
+	schema: {
+		example: {
+			result: 'error code',
+			message: 'error message',
+		},
+	},
+})
 export class TransactionController {
 	private readonly logger = new Logger(TransactionController.name)
 	constructor(private readonly accountService: AccountService) {}
 
 	@Post()
+	@HttpCode(201)
+	@ApiOperation({ summary: 'Create a new transaction' })
+	@ApiResponse({
+		status: 201,
+		description: 'Transaction created successfully',
+		type: CreateTransactionResponseDTO,
+	})
 	async transfer(
 		@Body() dto: CreateTransactionRequestDTO,
 	): Promise<CreateTransactionResponseDTO> {

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsNotEmpty } from 'class-validator'
+import { CustomerDTO } from './common/customer.dto'
 
 export class CreateCustomerRequestDTO {
 	@ApiProperty()
@@ -17,4 +18,11 @@ export class CreateCustomerResponseDTO {
 
 	@ApiProperty()
 	message: string
+
+	@ApiProperty()
+	data: CustomerDTO
+
+	constructor(partial: Partial<CreateCustomerResponseDTO>) {
+		Object.assign(this, partial)
+	}
 }

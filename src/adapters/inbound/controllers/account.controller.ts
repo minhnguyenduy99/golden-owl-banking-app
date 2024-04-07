@@ -17,7 +17,7 @@ import {
 	QueryTransactionRequestDTO,
 	QueryTransactionResponseDTO,
 } from './dtos/query-transactions.dtos'
-import { ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AccountDTO } from './dtos/common/account.dto'
 import { AccountNotFoundException } from 'src/application/errors'
 import { DBTransactionRepository } from 'src/adapters/outbound/repositories'
@@ -28,6 +28,26 @@ import { AccountService } from 'src/application/services'
 	path: 'accounts',
 })
 @ApiTags('accounts')
+@ApiResponse({
+	status: 500,
+	description: 'Internal server error',
+	schema: {
+		example: {
+			result: 'error',
+			message: 'Internal server error',
+		},
+	},
+})
+@ApiResponse({
+	status: 400,
+	description: 'Bad request',
+	schema: {
+		example: {
+			result: 'error code',
+			message: 'error message',
+		},
+	},
+})
 export class AccountController {
 	private readonly logger = new Logger(AccountController.name)
 
@@ -37,6 +57,12 @@ export class AccountController {
 	) {}
 
 	@Post()
+	@ApiOperation({ summary: 'Create a new account' })
+	@ApiResponse({
+		status: 201,
+		description: 'Account created successfully',
+		type: CreateAccountResponseDTO,
+	})
 	async createAccount(
 		@Body() dto: CreateAccountRequestDTO,
 	): Promise<CreateAccountResponseDTO> {
@@ -53,6 +79,12 @@ export class AccountController {
 	}
 
 	@Get('/:accountNo')
+	@ApiOperation({ summary: 'Retrieve account balance' })
+	@ApiResponse({
+		status: 200,
+		description: 'Account balance retrieved successfully',
+		type: AccountDTO,
+	})
 	async retrieveAccountBalance(
 		@Param('accountNo') accountNo: string,
 	): Promise<AccountDTO> {
@@ -82,6 +114,14 @@ export class AccountController {
 	}
 
 	@Get('/:accountNo/transactions')
+	@ApiOperation({
+		summary: 'Retrieve transaction history of a given account',
+	})
+	@ApiResponse({
+		status: 200,
+		description: 'Transactions retrieved successfully',
+		type: QueryTransactionResponseDTO,
+	})
 	async getTransactionsByAccountNo(
 		@Param('accountNo') accountNo: string,
 		@Query() q: QueryTransactionRequestDTO,
