@@ -1,0 +1,635 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/api/v1/accounts": {
+            "post": {
+                "operationId": "AccountController_createAccount",
+                "summary": "Create a new account",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateAccountRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Account created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateAccountResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "accounts"
+                ]
+            }
+        },
+        "/api/v1/accounts/{accountNo}": {
+            "get": {
+                "operationId": "AccountController_retrieveAccountBalance",
+                "summary": "Retrieve account balance",
+                "parameters": [
+                    {
+                        "name": "accountNo",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account balance retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "accounts"
+                ]
+            }
+        },
+        "/api/v1/accounts/{accountNo}/transactions": {
+            "get": {
+                "operationId": "AccountController_getTransactionsByAccountNo",
+                "summary": "Retrieve transaction history of a given account",
+                "parameters": [
+                    {
+                        "name": "accountNo",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "required": false,
+                        "in": "query",
+                        "schema": {
+                            "default": 1,
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "required": false,
+                        "in": "query",
+                        "schema": {
+                            "default": 20,
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transactions retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QueryTransactionResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "accounts"
+                ]
+            }
+        },
+        "/api/v1/transactions": {
+            "post": {
+                "operationId": "TransactionController_transfer",
+                "summary": "Create a new transaction",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateTransactionRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transaction created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateTransactionResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "transactions"
+                ]
+            }
+        },
+        "/api/v1/customers": {
+            "post": {
+                "operationId": "CustomerController_createCustomer",
+                "summary": "Create a new customer",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateCustomerRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateCustomerResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customers"
+                ]
+            }
+        },
+        "/api/v1/customers/{customerId}": {
+            "get": {
+                "operationId": "CustomerController_getCustomerById",
+                "summary": "Retrieve customer by ID",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CustomerDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error code",
+                                        "message": "error message"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "result": "error",
+                                        "message": "Internal server error"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "customers"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "GO Simple Banking App",
+        "description": "",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "schemas": {
+            "CreateAccountRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "customerId": {
+                        "type": "string"
+                    },
+                    "initialDepositAmount": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "customerId",
+                    "initialDepositAmount"
+                ]
+            },
+            "AccountDTO": {
+                "type": "object",
+                "properties": {
+                    "accountNo": {
+                        "type": "string"
+                    },
+                    "accountName": {
+                        "type": "string"
+                    },
+                    "customerId": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
+                    "createdAt": {
+                        "format": "date-time",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "accountNo",
+                    "accountName",
+                    "customerId",
+                    "balance",
+                    "createdAt"
+                ]
+            },
+            "CreateAccountResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/AccountDTO"
+                    }
+                },
+                "required": [
+                    "result",
+                    "message",
+                    "data"
+                ]
+            },
+            "TransactionDTO": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "accountNo": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "givenAccountNo": {
+                        "type": "string"
+                    },
+                    "givenAccountName": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "initialBalance": {
+                        "type": "number"
+                    },
+                    "transactionDate": {
+                        "format": "date-time",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "accountNo",
+                    "type",
+                    "givenAccountNo",
+                    "givenAccountName",
+                    "amount",
+                    "initialBalance",
+                    "transactionDate"
+                ]
+            },
+            "QueryTransactionResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "totalCount": {
+                        "type": "number"
+                    },
+                    "totalPage": {
+                        "type": "number"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TransactionDTO"
+                        }
+                    }
+                },
+                "required": [
+                    "totalCount",
+                    "totalPage",
+                    "items"
+                ]
+            },
+            "CreateTransactionRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "transferAccountNo": {
+                        "type": "string"
+                    },
+                    "receiveAccountNo": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "transferAccountNo",
+                    "receiveAccountNo",
+                    "amount"
+                ]
+            },
+            "CreateTransactionResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/TransactionDTO"
+                    }
+                },
+                "required": [
+                    "result",
+                    "message",
+                    "data"
+                ]
+            },
+            "CreateCustomerRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "customerId": {
+                        "type": "string"
+                    },
+                    "customerName": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "customerId",
+                    "customerName"
+                ]
+            },
+            "CustomerDTO": {
+                "type": "object",
+                "properties": {
+                    "customerId": {
+                        "type": "string"
+                    },
+                    "customerName": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "format": "date-time",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "customerId",
+                    "customerName",
+                    "createdAt"
+                ]
+            },
+            "CreateCustomerResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "result": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/CustomerDTO"
+                    }
+                },
+                "required": [
+                    "result",
+                    "message",
+                    "data"
+                ]
+            }
+        }
+    }
+}
