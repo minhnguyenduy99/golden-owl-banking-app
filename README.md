@@ -40,4 +40,4 @@ To open Swagger, open: [http://localhost:3000/swagger](http://localhost:3000/swa
 
 ## 4. API Documentation
 
-You can view API documentation by copying content of the file [swagger,yaml](docs/swagger.yaml) and pase it into the [Swagger Online Editor](https://editor.swagger.io)
+You can view API documentation by copying content of the file [swagger,yaml](docs/swagger.yaml) and paste it into the [Swagger Online Editor](https://editor.swagger.io)
