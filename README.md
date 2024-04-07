@@ -1,4 +1,8 @@
-<p style="font-size: 36px; text-align: center">Golden Owl Banking Application</p>
+<p align="center">
+	<h1 align="center">
+		<strong>Golden Owl Demo Banking App</strong>
+	</h1>
+</p>
 
 # I. Installation
 
