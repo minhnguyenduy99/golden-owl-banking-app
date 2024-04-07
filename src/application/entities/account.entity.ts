@@ -50,7 +50,7 @@ export class Account {
 					(trx1, trx2) =>
 						trx1.transactionDate.getTime() -
 						trx2.transactionDate.getTime(),
-				) || [] // sort transactions by date from latest to earilest
+				) || [] // sort transactions by date from earliest to latest
 			this.createdAt = props.createdAt || new Date()
 		}
 	}
@@ -81,7 +81,7 @@ export class Account {
 			givenAccountName: account.accountName,
 			givenAccountNo: account.accountNo,
 		})
-		this.transactions.unshift(trx)
+		this.transactions.push(trx)
 		return trx
 	}
 
@@ -94,7 +94,7 @@ export class Account {
 			givenAccountName: account.accountName,
 			givenAccountNo: account.accountNo,
 		})
-		this.transactions.unshift(trx)
+		this.transactions.push(trx)
 		return trx
 	}
 
